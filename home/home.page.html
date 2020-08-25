@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      PlayCommerce 1
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">PlayCommerce 2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+      <ion-col>
+        {{ message }}
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="cargando">
+      <ion-col>
+        Cargando...
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-input [(ngModel)]="apiURL"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" expand="block" size="large" (click)="cargarProductos()">Reintentar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!cargando && productos.length > 0">
+      <ion-col>
+        <ion-input [(ngModel)]="termino"></ion-input>
+        <ion-button color="primary" expand="block" size="large" (click)="filtrar()">Buscar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item *ngFor="let producto of productosFiltrados; let i = index" (click)="iniciarBarcodeScanner(producto._id, i)">
+            <ion-avatar slot="start">
+              <img src="{{ apiURL }}images/{{ producto._id }}.png">
+            </ion-avatar>
+            <ion-label>
+              <p>{{ producto.nombre }}
+              <br>REF: {{ producto.caracteristicas.referencia }}
+              <br>EAN13: {{ producto.caracteristicas.ean13 }}</p>
+            </ion-label>
+          </ion-item>
+          </ion-list>
+      </ion-col>
+    </ion-row> -->
+    <ion-row *ngFor="let producto of productosFiltrados; let i = index"
+      (click)="iniciarBarcodeScanner(producto._id, i, producto.caracteristicas.referencia)">
+      <ion-col size="2" class="ion-align-self-center">
+        <ion-avatar>
+          <img src="{{ apiURL }}images/{{ producto._id }}.png" style="max-width: 100%;">
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="10">
+        <p>
+          {{ producto.nombre }}
+          <br>{{ producto.marca.nombre | uppercase }}
+          <br>MOD: {{ producto.caracteristicas.modelo }}
+          <br>REF: {{ producto.caracteristicas.referencia }}
+          <br>EAN13: {{ producto.caracteristicas.ean13 }}
+        </p>
+      </ion-col>
+    </ion-row>
+
+
+
+
+
+
+  </ion-grid>
+
+  <!-- <div id="container">
+    <strong>Ready to create an app?</strong>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  </div> -->
+</ion-content>
